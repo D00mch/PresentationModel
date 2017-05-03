@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">PresentationModel</string>
+
+    <string name="presenter_created">presenter created</string>
+    <string name="view_attached">view attached</string>
+    <string name="screen_touch">screen touch</string>
+</resources>
