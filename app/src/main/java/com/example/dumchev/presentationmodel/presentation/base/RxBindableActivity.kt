@@ -1,7 +1,9 @@
 package com.example.dumchev.presentationmodel.presentation.base
 
 import android.support.v7.app.AppCompatActivity
+import com.example.dumchev.presentationmodel.addTo
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
 
@@ -30,10 +32,12 @@ abstract class RxBindableActivity<Model : IPresentationModel> : AppCompatActivit
     abstract protected fun Model.onBind()
 
     protected fun <T> Observable<T>.bindLogic(consumer: Consumer<T>) {
-        subscriptions.add(this.subscribe(consumer))
+        subscribe(consumer).addTo(subscriptions)
     }
 
-    protected fun <T> Observable<T>.bind(consumer: (T) -> Unit) {
-        subscriptions.add(this.subscribe(consumer))
+    protected fun <T> Observable<T>.bindToView(consumer: (T) -> Unit) {
+        observeOn(AndroidSchedulers.mainThread())
+                .subscribe(consumer)
+                .addTo(subscriptions)
     }
 }

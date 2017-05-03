@@ -23,10 +23,10 @@ class MainActivity : RxBindableActivity<IStartPresentationModel>() {
         button.clicks().bindLogic(nextButtonPressed)
         rootLayout.clicks().bindLogic(screenTouch)
 
-        message.bind { strId -> showMessage(getString(strId)) }
-        goToSecondCommand.bind { showMessage("I should go to the next activity") }
-        bgColor.bind { colorId -> rootLayout.setBackgroundColor(resources.getColor(colorId)) }
-        luckyNumbers.bind { numbers -> textView.text = numbers.toString() }
+        message.bindToView { strId -> showMessage(getString(strId)) }
+        goToSecondScreenCommand.bindToView { showMessage("I should go to the next activity") }
+        bgColor.bindToView { colorId -> rootLayout.setBackgroundColor(resources.getColor(colorId)) }
+        luckyNumbers.bindToView { numbers -> textView.text = numbers.toString() }
     }
 
     private fun showMessage(message: String) {

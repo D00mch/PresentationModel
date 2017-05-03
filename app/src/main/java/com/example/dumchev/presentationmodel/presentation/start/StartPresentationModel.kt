@@ -41,7 +41,7 @@ class StartPresentationModel @Inject constructor(
 
     // api
     override val message: Observable<Int> = messageRelay
-    override val goToSecondCommand: Observable<Unit> = goToSecondRelay
+    override val goToSecondScreenCommand: Observable<Unit> = goToSecondRelay
     override val luckyNumbers: Observable<List<Int>> = luckyNumbersRelay
     override val bgColor: Observable<Int> = bgColorRelay
     override val screenTouch: Consumer<Unit> = screenTouchRelay
