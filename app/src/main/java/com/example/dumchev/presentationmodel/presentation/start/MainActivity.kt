@@ -19,7 +19,7 @@ class MainActivity : RxBindableActivity<IStartPresentationModel>() {
         setContentView(R.layout.activity_main)
     }
 
-    override fun IStartPresentationModel.onBind() {
+    override fun onBind(model: IStartPresentationModel) = with(model) {
         button.clicks().bindLogic(nextButtonPressed)
         rootLayout.clicks().bindLogic(screenTouch)
 

@@ -20,7 +20,7 @@ abstract class RxBindableActivity<Model : IPresentationModel> : AppCompatActivit
     override fun onStart() {
         super.onStart()
         model.bind()
-        model.onBind()
+        onBind(model)
     }
 
     override fun onStop() {
@@ -29,7 +29,7 @@ abstract class RxBindableActivity<Model : IPresentationModel> : AppCompatActivit
         model.unbind()
     }
 
-    abstract protected fun Model.onBind()
+    abstract protected fun onBind(model: Model)
 
     protected fun <T> Observable<T>.bindLogic(consumer: Consumer<T>) {
         subscribe(consumer).addTo(subscriptions)
