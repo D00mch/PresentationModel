@@ -7,43 +7,29 @@ import com.example.dumchev.presentationmodel.presentation.base.BasePresentationM
 import com.jakewharton.rxrelay2.BehaviorRelay
 import com.jakewharton.rxrelay2.PublishRelay
 import com.jakewharton.rxrelay2.Relay
-import io.reactivex.Observable
-import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
 @MainScope
 class StartPresentationModel @Inject constructor(
         repo: IRepository<Int>) : BasePresentationModel(), IStartPresentationModel {
 
-    // single event
-    private val messageRelay: Relay<Int> = PublishRelay.create()
-    private val goToSecondRelay: Relay<Unit> = PublishRelay.create()
-    private val screenTouchRelay: Relay<Unit> = PublishRelay.create()
-    private val nextButtonRelay: Relay<Unit> = PublishRelay.create()
-
-    // persisting events
-    private val luckyNumbersRelay: Relay<List<Int>> = BehaviorRelay.create()
-    private val bgColorRelay: Relay<Int> = BehaviorRelay.create()
+    override val message: Relay<Int> = PublishRelay.create()
+    override val goToSecondScreenCommand: Relay<Unit> = PublishRelay.create()
+    override val luckyNumbers: Relay<List<Int>> = BehaviorRelay.create()
+    override val bgColor: Relay<Int> = BehaviorRelay.create()
+    override val screenTouch: Relay<Unit> = PublishRelay.create()
+    override val nextButtonPressed: Relay<Unit> = PublishRelay.create()
 
     init {
-        messageRelay.accept(R.string.presenter_created)
-        bgColorRelay.accept(R.color.colorPrimary)
-        repo.provide().bind { numbers -> luckyNumbersRelay.accept(numbers) }
+        message.accept(R.string.presenter_created)
+        bgColor.accept(R.color.colorPrimary)
+        repo.provide().bind { numbers -> luckyNumbers.accept(numbers) }
 
-        screenTouchRelay.bind { messageRelay.accept(R.string.screen_touch) }
-        nextButtonRelay.bind { goToSecondRelay.accept(Unit) }
+        screenTouch.bind { message.accept(R.string.screen_touch) }
+        nextButtonPressed.bind { goToSecondScreenCommand.accept(Unit) }
     }
-
 
     override fun bind() {
-        messageRelay.accept(R.string.view_attached)
+        message.accept(R.string.view_attached)
     }
-
-    // api
-    override val message: Observable<Int> = messageRelay
-    override val goToSecondScreenCommand: Observable<Unit> = goToSecondRelay
-    override val luckyNumbers: Observable<List<Int>> = luckyNumbersRelay
-    override val bgColor: Observable<Int> = bgColorRelay
-    override val screenTouch: Consumer<Unit> = screenTouchRelay
-    override val nextButtonPressed: Consumer<Unit> = nextButtonRelay
 }
