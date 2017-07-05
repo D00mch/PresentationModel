@@ -9,3 +9,7 @@ fun Disposable.addTo(subscriptions: CompositeDisposable) = subscriptions.add(thi
 fun String.funf() {
     println("fdsf")
 }
+
+fun Bob() {
+
+}
