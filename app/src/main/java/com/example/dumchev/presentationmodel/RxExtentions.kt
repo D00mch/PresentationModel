@@ -5,3 +5,7 @@ import io.reactivex.disposables.Disposable
 
 
 fun Disposable.addTo(subscriptions: CompositeDisposable) = subscriptions.add(this)
+
+fun String.funf() {
+    println("fdsf")
+}
