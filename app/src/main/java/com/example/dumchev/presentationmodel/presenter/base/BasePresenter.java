@@ -16,8 +16,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public abstract class BasePresenter<View, ViewState extends BaseViewState<View>> {
 
-    @NonNull
-    protected ViewState viewState;
+    @NonNull protected ViewState viewState;
 
     private final CompositeDisposable viewBasedSubscriptions = new CompositeDisposable();
 
